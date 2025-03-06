@@ -20,8 +20,7 @@ Multi-Layer Perceptron (MLP)
     - The Gradient: The derivative of the loss function used to update weights
     - Descent Rule: Algorithm to adjust weights based on gradients
 
-Keras and TensorFlow
-- Libraries for implementing MLP
+Keras and TensorFlow for implementing MLP
 
 Optimizers
 - Determines how weights are updated. Common optimizers include:
