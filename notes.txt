@@ -1,3 +1,259 @@
-XOR : non linear donc pose problème pour neural network
+Advanced Machine Learning Notes
 
-activation function : to add non linearity to neural network
+Linear Perceptron (Heaviside Function 𝜎(𝑥))
+- A simple neural network model that uses a step function for activation.
+
+Multi-Layer Perceptron (MLP)
+- Introduction
+    - A Multi-Layer Perceptron (MLP) consists of multiple layers of neurons that help solve complex problems by introducing non-linearity through activation functions.
+- Activation Functions
+    - Sigmoid: Output range [0,1]
+    - Hyperbolic Tangent (tanh): Output range [-1,1]
+    - ReLU (Rectified Linear Unit): max(0, x)
+- Multi-Layer Perceptron Algorithm
+    - Forward propagation
+    - Backward propagation
+    - Stochastic Gradient Descent (SGD): An optimization method that updates weights after each sample to speed up learning.
+- Training Components
+    - The Loss: Measures prediction error
+    - One Epoch: One full pass through the dataset
+    - The Gradient: The derivative of the loss function used to update weights
+    - Descent Rule: Algorithm to adjust weights based on gradients
+
+Keras and TensorFlow
+- Libraries for implementing MLP
+
+Optimizers
+- Determines how weights are updated. Common optimizers include:
+    - Stochastic Gradient Descent (SGD): Uses a learning rate to define the step size
+    - Adam Optimizer: Uses previous gradients to improve updates
+    - Momentum: Helps maintain gradient direction
+    - Batch Gradient Descent: Updates weights after processing a batch of data
+
+XOR Problem and Non-Linearity
+- XOR is non-linear and cannot be solved using a simple perceptron. Activation functions help introduce non-linearity to solve such problems.
+
+Output Layer Activation Functions
+- Binary Classification: One node with sigmoid (output: probability between 0 and 1) example : 0.7 
+- Multiclass Classification: Softmax activation (mutually exclusive probabilities) example : [0.1, 0.7, 0.2] sum = 1
+- Multilabel Classification: Sigmoid activation (allows multiple labels per sample) example : [0,1,1,0] sum can be more than 1
+
+Most Used Activation Functions
+- ReLU: Avoids vanishing gradient issues
+- ELU: Improved version of ReLU
+- Sigmoid: Used for probabilistic outputs
+
+Neural Network Complexity
+- More hidden layers → Higher complexity
+- More neurons per layer → Greater ability to solve complex problems
+
+Learning Rate (n)
+- Determines the step size for updating weights. A key hyperparameter in optimization.
+
+Loss Functions
+- Binary Cross-Entropy: For binary classification
+- Categorical Cross-Entropy: For multi-class classification (with one-hot encoding)
+
+Batch Processing
+- Batch: A subset of the training data used for updating weights
+- Mini-batch Gradient Descent: A mix of SGD and batch gradient descent
+
+Batch Normalization and Covariate Shift
+- Batch Normalization: Normalizes input data (mean 0, variance 1)
+- Covariate Shift: When the input data distribution changes over time
+- Link: Batch normalization reduces covariate shift by stabilizing input distributions
+- Example: In image recognition, if a cat appears on different backgrounds, batch normalization helps adapt to new distributions, reducing the need for relearning.
+
+Regularization Techniques
+- Dropout: Randomly disables some neurons to prevent overfitting
+- Regularization: Adds a penalty to the loss function to reduce overfitting
+
+Flattening
+- Transforms multi-dimensional input data into a 1D array before passing it to dense layers.
+
+Convolutional Neural Networks (CNNs)
+- CNNs are specialized neural networks for image processing tasks.
+- Kernel (Filter): Extracts features from input data
+- Patch: A small region of the input data that the kernel processes
+- Kernel Size: Determines filter dimensions (hyperparameter)
+- hyperparameters : kernel size, depth, max pooling
+- Stride: Defines how far the kernel moves across the input data (le pas)
+- Output Size Formula: (input size - kernel size) / stride + 1
+- Padding: Adds zeros around the input to prevent loss of information when applying convolutions.
+- TensorFlow: Can automatically determine output size and handle padding for optimal feature extraction.
+
+- The kernel weights are learned through backpropagation. 
+    The network adjusts the weights to minimize the loss function, which measures the difference between predicted and actual values.
+    The kernel weights are updated based on the gradients of the loss function with respect to the weights.
+    This process is repeated iteratively until the model converges to a solution.
+
+- input image -> convolutional layer -> pooling layer -> fully connected layer -> output layer
+-Flattening is the process of converting the pooled feature map to a single column that is passed to the fully connected layer.
+
+- To reduce training time we use pooling layers to reduce the spatial dimensions of the feature map.
+
+- Pooling layers reduce the spatial dimensions of the feature map by downsampling the data.
+- avg pool and max pool are the most common pooling methods. 
+- Max pooling selects the maximum value from the pool, while average pooling calculates the average value.
+
+- problem are often non linear so we use activation functions to introduce non-linearity into the model.
+- ReLU is the most commonly used activation function in CNNs due to its simplicity and efficiency.
+
+- Now training a CNN having multiple convolutionals layers example : 
+- input image have 3 differents channels (RGB)
+- we apply a convolutional layer with 5 kernels its that mean I have 5 features maps
+- if i have a kernel of 2x2 and my kernel have 3 Components (RGB) so the kernel will be 2x2x3 because we have 3 channels
+- if the image is grey so the kernel will be 2x2x1
+- example of architecture : input -> convolution + ReLU ( 32 kernels) -> pooling ( 64 kernels )-> convolution + ReLU ( 128 kernels )-> pooling -> flattening -> fully connected layer -> softmax activation function -> output layer
+
+- we need multiple convolutional layers to extract more complex features from the input data.
+- the first convolutional layers extract simple features like edges and colors, while deeper layers extract more complex features like shapes and patterns.
+- examples of complex features are eyes, ears, and noses in facial recognition tasks.
+
+- batch normalization is a technique that normalizes the input data to improve model performance. 
+- it helps the next layer learn more efficiently by providing normalized input data.
+- it reduces the internal covariate shift by stabilizing the input distributions.
+- batch normalization is applied after the convolutional layer and before the activation function.
+
+
+underfitting : the model is too simple to capture the underlying patterns in the data.
+
+model capacity improved by transfer learning, data augmentation, and hyperparameter tuning.
+model capacity is the ability of the model to capture complex patterns in the data.
+
+
+transfer learning is the process of using a pre-trained model to solve a similar problem.
+
+3 strategies : 
+1) train the entire model (better if you have a large dataset but different from the pre-trained model)
+2) train some (not much) layers and freeze others (better if you have a large dataset and similar to the pre-trained model)
+3) train some (a lot) layers and freeze others (better if you have a small dataset and different to the pre-trained model)
+4) freeze the convolutional base (better if you have a small dataset and similar to the pre-trained model)
+
+example of transfer learning : image classification task with a pre-trained model on ImageNet dataset.
+
+can we freeze layer then train layer and then freeze layer again ? no because the model will forget the learned patterns.
+
+fine-tuning is the process of training the pre-trained model on a new dataset to improve performance.
+
+keep the convolutionnal base frozen if you have a small dataset to avoid overfitting.
+
+difference between hyperparameter and parameter :
+- hyperparameter : set before training the model (learning rate, batch size, number of epochs)
+- parameter : learned during training (weights and biases)
+
+data augmentation is the process of generating new training samples by applying random transformations to the existing data.
+
+convolution to mlp bridge is done by the flatten layer -> feature map to vector
+but now we have also the global average pooling layer that reduces the spatial dimensions of the feature map to a single value.
+flattening if 16x16x4 -> 1024
+global average pooling if 16x16x4 -> 4
+So it's two ways to transform 2D data to 1D data.
+
+
+
+
+Recurrent Neural Networks (RNNs) : specialized neural networks for sequential data (which is data that has a temporal or sequential order).
+
+RNN is a type of NN htat iterates over a sequence (of vector) while keeping an internal state (memory) that depends on the previous elements of the sequence.
+
+Vanishing Gradient Problem : when the gradients become too small during backpropagation, making it hard for the model to learn long-term dependencies.
+
+Transformers : Architecture :
+
+    ENCODER : understand the input sequence and extract its features
+
+
+        -input embedding : converts input tokens into vectors
+            for text : one-hot encoding (the number of "classes" is the size of the vocabulary)
+            embedding (projection): projects the one-hot encoded vectors into a lower-dimensional space that the model takes as input
+
+
+        -positional encoding : adds positional information to the input embeddings
+
+
+
+        -self-attention mechanism : calculates the importance of each token in the sequence
+
+            the sequence elements are not aware of one another
+            the self-attention mechanism allows each element to consider the other elements in the sequence when making predictions.
+            similarity scores are calculated between each pair of tokens in the sequence to determine their importance.
+            example : x1 x2 x3 x4 x5
+            x1 is compared to x2, x3, x4, x5
+            x2 is compared to x1, x3, x4, x5.... 
+            it's a scalar product 
+
+            then we apply a softmax function to the similarity scores to get the attention weights. (it's the score of the similarity)
+            the attention weights are multiplied by the input tokens to get the weighted sum, which is the output of the self-attention mechanism.
+            now x1 = sum of (x1, x2, x3, x4, x5) * attention weights
+
+            we take each vector and now we put everything in matrix M 
+            we multiply M transposed by M -> we get the similarity matrix
+            we apply softmax to the similarity matrix -> we get the attention matrix
+            we multiply the attention matrix by M -> we get the output matrix
+
+            add learnable weights to learn how to perform the self-attention mechanism :
+                the learnable weights are called query, key, and value matrices.
+                with x1 example -> query
+                x1(k1) x2(k2)  x3(k3)  x4(k4) ... xN(kN)
+                v1     v2      v3      v4     ... vN
+                x1 = softmax(query * key) * value
+
+            multi-head attention : the self-attention mechanism is applied multiple times in parallel, each with different learnable weights.
+            
+
+
+        -feed forward neural network : processes the self-attention output
+
+            takes a matrix as input 
+
+            -residual connection : adds the input to the feed-forward neural network output to prevent the vanishing gradient problem.
+            -layer normalization : normalizes the output of the residual connection to stabilize training.
+
+            the dog is sleeping and the cat is playing
+            the model is aware that the cat is playing and the dog is sleeping because we add positional encoding to the input embeddings.
+            p(i,j) = sin (pos/10000^(2i/d)) if i is even
+            p(i,j) = cos (pos/10000^(2i/d)) if i is odd
+            pos : position of the token in the sequence
+            i : dimension of the embedding
+            d : dimension of the embedding
+
+            the output of the encoder is a sequence of vectors that represent the input sequence's features.
+
+        1 layer contains : input embedding -> positional encoding -> self-attention mechanism -> feed-forward neural network
+
+        the input embedding and positinal are not done each time we pass through the layer, they are done only once because they are not learnable parameters.
+
+
+        how to perform a classification task on a sequence ? 
+        At the end of the encoder, we can add a classification head that takes the encoder's output which is a sequence of vectors
+        We add a global average pooling layer to reduce the sequence of vectors to a single vector that is passed to the classification head.
+        Then, we apply an MLP to the pooled vector to make predictions.
+
+
+
+    DECODER : generate the output sequence based on the encoder's features
+
+    
+
+RNN contrary to Transformers processes one by one , while Transformers all in one 
+
+
+MLP GAN : Generative Adversarial Networks (GANs) are a type of neural network architecture that consists of two networks: a generator and a discriminator.
+
+    -Generator : generates new samples from random noise
+    -Discriminator : distinguishes between real and generated samples
+
+    -The generator tries to generate samples that are indistinguishable from real samples, while the discriminator tries to correctly classify the samples as real or generated.
+
+    -The generator and discriminator are trained simultaneously in a min-max game, where the generator tries to fool the discriminator, and the discriminator tries to distinguish between real and generated samples.
+
+    -The loss function of the GAN is the sum of the generator and discriminator losses.
+
+    -The generator loss is the cross-entropy loss between the generated samples and the real samples, while the discriminator loss is the cross-entropy loss between the real and generated samples.
+
+    -The GAN is trained using backpropagation and stochastic gradient descent.
+
+    -The GAN architecture is used for generating new samples, such as images, text, and audio.
+
+    
