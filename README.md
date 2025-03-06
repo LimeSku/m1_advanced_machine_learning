@@ -10,10 +10,7 @@ A Linear Perceptron is the most basic type of artificial neural network. It cons
 
 The Heaviside Step Function is a type of activation function that outputs either 0 or 1, depending on the input value:
 
-\[ \sigma(x) = \begin{cases} 
-1, & \text{if } x \geq 0 \\
-0, & \text{if } x < 0 
-\end{cases} \]
+If the input \( x \) is greater than or equal to zero, the function outputs 1. If the input \( x \) is less than zero, the function outputs 0.
 
 #### Why use this function?
 
@@ -26,10 +23,7 @@ The function acts like a binary switch:
 
 Imagine a simple classifier that determines whether the temperature is hot or cold based on a threshold. If we set the threshold at 25°C, we can define the function:
 
-\[ \sigma(T - 25) = \begin{cases} 
-1, & \text{if } T \geq 25 \text{ (Hot)} \\
-0, & \text{if } T < 25 \text{ (Cold)} 
-\end{cases} \]
+If the temperature \( T \) is greater than or equal to 25°C, the function outputs 1 (Hot). If the temperature \( T \) is less than 25°C, the function outputs 0 (Cold).
 
 #### Why is this not enough for complex problems?
 
@@ -70,7 +64,7 @@ These activation functions are commonly used in modern deep learning architectur
 
 1. **ReLU (Rectified Linear Unit)**
     - **Formula:**
-      \[ \sigma(x) = \max(0, x) \]
+    ReLU(x) = max(0, x)
     - **Why is it used?**
       - Simple and efficient.
       - Helps prevent the vanishing gradient problem (where gradients become too small, stopping the learning process).
@@ -83,10 +77,7 @@ These activation functions are commonly used in modern deep learning architectur
 
 2. **ELU (Exponential Linear Unit)**
     - **Formula:**
-      \[ \text{ELU}(x) = \begin{cases} 
-      x, & \text{if } x > 0 \\
-      \alpha(e^x - 1), & \text{if } x \leq 0 
-      \end{cases} \]
+    ELU(x) = x if x > 0, otherwise α(e^x - 1)
 
 ## Why is it used?
 Like ReLU but solves the Dying ReLU problem by allowing small negative values.
@@ -97,7 +88,7 @@ When training deep networks where ReLU is not performing well.
 
 ### 3. Sigmoid
 **Formula:**
-\[ \sigma(x) = \frac{1}{1 + e^{-x}} \]
+Sigmoid(x) = 1 / (1 + exp(-x))
 
 **Why is it used?**
 Converts any input into a value between 0 and 1.
@@ -107,9 +98,8 @@ Good for probabilistic outputs (e.g., binary classification).
 Output layer of binary classification models.
 Not recommended for hidden layers due to vanishing gradients.
 
-### 4. Softmax
 **Formula:**
-\[ \sigma(x_i) = \frac{e^{x_i}}{\sum_j e^{x_j}} \]
+Each element in the vector is exponentiated and then divided by the sum of all exponentiated elements.
 
 **Why is it used?**
 Converts a vector of numbers into probabilities that sum up to 1.
@@ -153,13 +143,6 @@ Backward propagation (or backpropagation) is the process of adjusting the weight
 ### 3. Stochastic Gradient Descent (SGD)
 Gradient Descent is an optimization algorithm used to update the model's weights and minimize the loss.
 
-**Formula:**
-\[ W = W - \eta \cdot \frac{\partial L}{\partial W} \]
-
-- \( W \) = Weight being updated.
-- \( \eta \) = Learning rate (how big the step is).
-- \( \frac{\partial L}{\partial W} \) = Gradient of the loss function.
-
 Stochastic Gradient Descent (SGD) updates weights after each sample instead of the full dataset, making it faster but noisier.
 
 ## Training Components
@@ -185,15 +168,7 @@ A gradient is the derivative of the loss function with respect to a weight.
 - Small gradient → Small weight updates.
 
 ### 4. Descent Rule
-The descent rule defines how weights are updated based on gradients. The most common rule is:
-
-\[ W = W - \eta \cdot \frac{\partial L}{\partial W} \]
-
-Where:
-- \( \eta \) (learning rate) controls how much the weight changes.
-- A large learning rate converges faster but risks overshooting.
-- A small learning rate converges slower but is more stable.
-
+The descent rule defines how weights are updated based on gradients.
 
 Keras and TensorFlow for implementing MLP
 
