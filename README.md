@@ -76,37 +76,35 @@ These activation functions are commonly used in modern deep learning architectur
       - Dying ReLU Problem: If neurons receive negative values, they will output zero forever, meaning they never activate.
 
 2. **ELU (Exponential Linear Unit)**
-    - **Formula:**
-    ELU(x) = x if x > 0, otherwise α(e^x - 1)
+     - **Formula:**
+     ELU(x) = x if x > 0, otherwise α(e^x - 1)
+     - **Why is it used?**
+          - Like ReLU but solves the Dying ReLU problem by allowing small negative values.
+          - Can lead to faster learning and better performance in deep networks.
+     - **When to use it?**
+          - When training deep networks where ReLU is not performing well.
 
-## Why is it used?
-Like ReLU but solves the Dying ReLU problem by allowing small negative values.
-Can lead to faster learning and better performance in deep networks.
+3. **Sigmoid**
+     - **Formula:**
+     Sigmoid(x) = 1 / (1 + exp(-x))
 
-## When to use it?
-When training deep networks where ReLU is not performing well.
+     - **Why is it used?**
+          - Converts any input into a value between 0 and 1.
+          - Good for probabilistic outputs (e.g., binary classification).
 
-### 3. Sigmoid
-**Formula:**
-Sigmoid(x) = 1 / (1 + exp(-x))
+     - **When to use it?**
+          Output layer of binary classification models.
+          Not recommended for hidden layers due to vanishing gradients.
 
-**Why is it used?**
-Converts any input into a value between 0 and 1.
-Good for probabilistic outputs (e.g., binary classification).
 
-**When to use it?**
-Output layer of binary classification models.
-Not recommended for hidden layers due to vanishing gradients.
-
-**Formula:**
-Each element in the vector is exponentiated and then divided by the sum of all exponentiated elements.
-
-**Why is it used?**
-Converts a vector of numbers into probabilities that sum up to 1.
-Helps in multiclass classification problems.
-
-**When to use it?**
-Output layer for multiclass classification.
+4. **Softmax**
+     - **Formula:**
+     Each element in the vector is exponentiated and then divided by the sum of all exponentiated elements.
+     - **Why is it used?**
+     Converts a vector of numbers into probabilities that sum up to 1.
+     Helps in multiclass classification problems.
+     - **When to use it?**
+     Output layer for multiclass classification.
 
 ## Other Activation Functions (Less Common)
 These functions are not as frequently used in practice but are worth mentioning:
